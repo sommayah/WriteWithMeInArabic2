@@ -19,4 +19,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void onPlayClicked(View view){
+        Intent playIntent = new Intent(this, PlayActivity.class);
+        startActivity(playIntent);
+    }
+
 }

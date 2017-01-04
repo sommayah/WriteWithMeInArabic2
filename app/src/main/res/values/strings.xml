@@ -3,4 +3,14 @@
     <string name="title_activity_alphabet">AlphabetActivity</string>
     <string name="title_activity_practice">PracticeActivity</string>
     <string name="title_activity_play">PlayActivity</string>
+    <string name="next" translatable="false">next</string>
+    <string name="previous" translatable="false">previous</string>
+    <string name="blue" translatable="false">blue</string>
+    <string name="red" translatable="false">red</string>
+    <string name="yellow" translatable="false">yellow</string>
+    <string name="white" translatable="false">white</string>
+    <string name="green" translatable="false">green</string>
+    <string name="erase" translatable="false">erase</string>
+    <string name="print" translatable="false">print</string>
+    <string name="trash" translatable="false">trash</string>
 </resources>

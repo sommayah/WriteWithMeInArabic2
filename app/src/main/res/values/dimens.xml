@@ -3,4 +3,15 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="button_margin">4dp</dimen>
+    <dimen name="button_dimen">37dp</dimen>
+    <dimen name="text_margin">37dp</dimen>
+
+    <!-- Brush sizes -->
+    <dimen name="small_brush">15dp</dimen>
+    <integer name="small_size">15</integer>
+    <dimen name="medium_brush">15dp</dimen>
+    <integer name="medium_size">15</integer>
+    <dimen name="large_brush">25dp</dimen>
+    <integer name="large_size">25</integer>
 </resources>

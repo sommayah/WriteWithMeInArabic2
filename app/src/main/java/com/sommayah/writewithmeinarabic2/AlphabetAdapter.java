@@ -18,6 +18,7 @@ public class AlphabetAdapter extends BaseAdapter {
     private Context context;
     private final String[] alphabetValues;
     private final String LETTER = "letter";
+    private final String LETTERPOSITION = "letter_position";
 
     public AlphabetAdapter(Context context, String[] alphabetValues) {
         this.context = context;
@@ -68,6 +69,7 @@ public class AlphabetAdapter extends BaseAdapter {
                         Toast.LENGTH_SHORT).show();
                 Intent practice = new Intent(context, PracticeActivity.class);
                 practice.putExtra(LETTER, alphabetValues[position]);
+                practice.putExtra(LETTERPOSITION, position);
                 context.startActivity(practice);
 
             }

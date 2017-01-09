@@ -5,20 +5,41 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class PracticeActivity extends AppCompatActivity {
+    @BindView(R.id.previous)
+    ImageButton mPreviousButton;
+    @BindView(R.id.next)
+    ImageButton mNextButton;
+    @BindView(R.id.background_layout)
+    RelativeLayout mLayout;
+
     private DrawingView drawView;
     private float smallBrush;
 
     private ImageButton eraseBtn;
     private ImageButton currPaint;
 
+    int currentWordIndex = 0;
+    int numberOfWords = 0;
+
+    private final String LETTERPOSITION = "letter_position";
+    private String[] letterArray;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice);
+        ButterKnife.bind(this);
         initPaint();
-        //syncWithIndex();
+        int letter_position = getIntent().getIntExtra(LETTERPOSITION, 0);
+        letterArray = AlphabetActivity.workSheetsArray.get(letter_position);
+        numberOfWords = letterArray.length - 1;
+        syncWithIndex();
 
 
     }
@@ -66,14 +87,16 @@ public class PracticeActivity extends AppCompatActivity {
 //        }
 //
 //        image.setImageResource(resourceId);
+        setHiddenButtonSettings();
         Resources bgres = getResources();
         int bgresourceId;
-        bgresourceId = bgres.getIdentifier(/*WORDSNAMES[index]+"page"*/"blank", "drawable"
+        bgresourceId = bgres.getIdentifier(letterArray[currentWordIndex], "drawable"
                     , getPackageName());
 
 
-        View drawingView = (View) findViewById(R.id.drawing);
-        drawingView.setBackgroundResource(bgresourceId);
+//        View drawingView = (View) findViewById(R.id.drawing);
+//        drawingView.setBackgroundResource(bgresourceId);
+        mLayout.setBackgroundResource(bgresourceId);
     }
 
 
@@ -107,6 +130,35 @@ public class PracticeActivity extends AppCompatActivity {
 
     public void onNewClicked(View view){
         drawView.startNew();
+    }
+
+    public void onNextClicked(View view){
+        if(currentWordIndex < numberOfWords){
+            currentWordIndex++;
+            syncWithIndex();
+        }
+        setHiddenButtonSettings();
+        drawView.startNew();
+
+    }
+
+    public void onPreviousClicked(View view){
+        if(currentWordIndex > 0){
+            currentWordIndex--;
+            syncWithIndex();
+        }
+        setHiddenButtonSettings();
+        drawView.startNew();
+
+    }
+
+    public void onPlaySoundClicked(View view){
+
+    }
+
+    public void setHiddenButtonSettings(){
+        mPreviousButton.setVisibility((currentWordIndex == 0)? View.INVISIBLE: View.VISIBLE);
+        mNextButton.setVisibility((currentWordIndex == numberOfWords)? View.INVISIBLE: View.VISIBLE);
     }
 
 }

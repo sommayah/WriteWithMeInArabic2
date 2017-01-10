@@ -20,7 +20,7 @@ public class AlphabetActivity extends AppCompatActivity {
     static final String[] lettersFilesArray = new String[]{
             "a", "b", "ta", "tha", "jeem", "ha",
             "kha", "dal", "thal", "ra", "zeen", "seen",
-            "sheen", "sad", "dad", "Tta", "Zza", "ain",
+            "sheen", "sad", "dad", "tta", "zza", "ain",
             "ghain", "fa", "qaf", "kaf", "lam", "meem",
             "noon", "haaa", "waw", "ya", "a", "tamarbota", "hamza", "hamza"
 

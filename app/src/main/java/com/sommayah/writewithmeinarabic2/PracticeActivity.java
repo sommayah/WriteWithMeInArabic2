@@ -1,11 +1,16 @@
 package com.sommayah.writewithmeinarabic2;
 
 import android.content.res.Resources;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,20 +31,28 @@ public class PracticeActivity extends AppCompatActivity {
 
     int currentWordIndex = 0;
     int numberOfWords = 0;
+    private final int NUMLETTERS = 28;
+    private boolean blank_page = false;
 
     private final String LETTERPOSITION = "letter_position";
     private String[] letterArray;
-
+    private static MediaPlayer letterMediaPlayer;
+    private final String TAG = PracticeActivity.class.getSimpleName();
+    private int letter_position = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice);
         ButterKnife.bind(this);
         initPaint();
-        int letter_position = getIntent().getIntExtra(LETTERPOSITION, 0);
-        letterArray = AlphabetActivity.workSheetsArray.get(letter_position);
-        numberOfWords = letterArray.length - 1;
-        syncWithIndex();
+        letter_position = getIntent().getIntExtra(LETTERPOSITION, 0);
+        if(letter_position < NUMLETTERS) {
+            letterArray = AlphabetActivity.workSheetsArray.get(letter_position);
+            numberOfWords = letterArray.length - 1;
+            syncWithIndex();
+        }else if(blank_page == true){
+            setUpBlankPage();
+        }
 
 
     }
@@ -99,6 +112,36 @@ public class PracticeActivity extends AppCompatActivity {
         mLayout.setBackgroundResource(bgresourceId);
     }
 
+    private void setUpBlankPage(){
+        Resources bgres = getResources();
+        int bgresourceId;
+        bgresourceId = bgres.getIdentifier("blank", "drawable"
+                , getPackageName());
+        mLayout.setBackgroundResource(bgresourceId);
+        mPreviousButton.setVisibility(View.INVISIBLE);
+        mNextButton.setVisibility(View.INVISIBLE);
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        letterMediaPlayer = new MediaPlayer();
+        playAudio();
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //currPaint.setBackgroundColor(Color.TRANSPARENT);
+        currPaint.setSelected(!currPaint.isSelected());
+        //added check null to prevent crash that happens if th
+        if(letterMediaPlayer != null)
+            letterMediaPlayer.release();
+        letterMediaPlayer = null;
+    }
+
 
     public void onEraseClicked(View view){
         if (view != currPaint) {
@@ -139,6 +182,7 @@ public class PracticeActivity extends AppCompatActivity {
         }
         setHiddenButtonSettings();
         drawView.startNew();
+        stopAndResetSounds();
 
     }
 
@@ -149,16 +193,45 @@ public class PracticeActivity extends AppCompatActivity {
         }
         setHiddenButtonSettings();
         drawView.startNew();
+        stopAndResetSounds();
 
     }
 
     public void onPlaySoundClicked(View view){
-
+        playAudio();
     }
 
     public void setHiddenButtonSettings(){
         mPreviousButton.setVisibility((currentWordIndex == 0)? View.INVISIBLE: View.VISIBLE);
         mNextButton.setVisibility((currentWordIndex == numberOfWords)? View.INVISIBLE: View.VISIBLE);
+    }
+
+    private void stopAndResetSounds() {
+        if(letterMediaPlayer != null){
+            letterMediaPlayer.reset();
+        }
+    }
+
+    private void playAudio() {
+        if(letter_position < NUMLETTERS) {
+            try {
+                prepareSound(AlphabetActivity.lettersFilesArray[letter_position], letterMediaPlayer);
+                letterMediaPlayer.start();
+
+            } catch (Exception e) {
+                Log.e(TAG, "error: " + e.getMessage(), e);
+            }
+        }
+
+    }
+
+    private void prepareSound(String soundFile, MediaPlayer mediaPlayer)
+            throws IOException {
+        mediaPlayer.reset();
+        mediaPlayer.setDataSource(this, Uri.parse(
+                "android.resource://" + getPackageName()
+                        + "/" + "raw" + "/" + soundFile));
+        mediaPlayer.prepare();
     }
 
 }

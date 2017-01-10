@@ -212,9 +212,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_height="@dimen/audio_btn_dimen"
-            android:layout_width="@dimen/audio_btn_dimen"
-            android:layout_marginTop="@dimen/button_margin"
-            android:layout_marginRight="@dimen/button_margin" />
+            android:layout_width="@dimen/audio_btn_dimen" />
 
         <com.sommayah.writewithmeinarabic2.DrawingView
             android:id="@+id/drawing"

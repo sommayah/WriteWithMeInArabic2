@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by sommayahsoliman on 1/3/17.
@@ -19,6 +18,7 @@ public class AlphabetAdapter extends BaseAdapter {
     private final String[] alphabetValues;
     private final String LETTER = "letter";
     private final String LETTERPOSITION = "letter_position";
+    private final int NUMLETTER = 28;
 
     public AlphabetAdapter(Context context, String[] alphabetValues) {
         this.context = context;
@@ -65,12 +65,17 @@ public class AlphabetAdapter extends BaseAdapter {
         gridView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "" + alphabetValues[position],
-                        Toast.LENGTH_SHORT).show();
-                Intent practice = new Intent(context, PracticeActivity.class);
-                practice.putExtra(LETTER, alphabetValues[position]);
-                practice.putExtra(LETTERPOSITION, position);
-                context.startActivity(practice);
+//                Toast.makeText(context, "" + alphabetValues[position],
+//                        Toast.LENGTH_SHORT).show();
+                if(position <= NUMLETTER) {
+                    Intent practice = new Intent(context, PracticeActivity.class);
+                    practice.putExtra(LETTER, alphabetValues[position]);
+                    practice.putExtra(LETTERPOSITION, position);
+                    context.startActivity(practice);
+                }else{
+                    Intent translation = new Intent(context, TranslationActivity.class);
+                    context.startActivity(translation);
+                }
 
             }
         });

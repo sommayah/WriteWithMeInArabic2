@@ -50,7 +50,8 @@ public class PracticeActivity extends AppCompatActivity {
             letterArray = AlphabetActivity.workSheetsArray.get(letter_position);
             numberOfWords = letterArray.length - 1;
             syncWithIndex();
-        }else if(blank_page == true){
+        }else{
+            blank_page = true;
             setUpBlankPage();
         }
 
@@ -128,6 +129,9 @@ public class PracticeActivity extends AppCompatActivity {
         super.onStart();
         letterMediaPlayer = new MediaPlayer();
         playAudio();
+        if(blank_page == true){
+            setUpBlankPage();
+        }
     }
 
 

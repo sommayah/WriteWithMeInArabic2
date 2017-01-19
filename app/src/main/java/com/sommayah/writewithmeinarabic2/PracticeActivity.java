@@ -1,5 +1,6 @@
 package com.sommayah.writewithmeinarabic2;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -8,7 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.io.IOException;
 
@@ -22,6 +25,18 @@ public class PracticeActivity extends AppCompatActivity {
     ImageButton mNextButton;
     @BindView(R.id.background_layout)
     RelativeLayout mLayout;
+    @BindView((R.id.write))
+    ImageButton mWriteButton;
+    @BindView(R.id.practice_layout)
+    LinearLayout mPracticeLayout;
+    @BindView(R.id.emptyTextView1)
+    TextView mText1;
+    @BindView(R.id.emptyTextView2)
+    TextView mText2;
+    @BindView(R.id.emptyTextView3)
+    TextView mText3;
+    @BindView(R.id.emptyTextView4)
+    TextView mText4;
 
     private DrawingView drawView;
     private float smallBrush;
@@ -33,6 +48,7 @@ public class PracticeActivity extends AppCompatActivity {
     int numberOfWords = 0;
     private final int NUMLETTERS = 28;
     private boolean blank_page = false;
+    private final int DESIGN_RESULT = 0;
 
     private final String LETTERPOSITION = "letter_position";
     private String[] letterArray;
@@ -131,6 +147,11 @@ public class PracticeActivity extends AppCompatActivity {
         playAudio();
         if(blank_page == true){
             setUpBlankPage();
+            mWriteButton.setVisibility(View.VISIBLE);
+            mPracticeLayout.setVisibility(View.VISIBLE);
+        }else{
+            mWriteButton.setVisibility(View.INVISIBLE);
+            mPracticeLayout.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -199,6 +220,28 @@ public class PracticeActivity extends AppCompatActivity {
         drawView.startNew();
         stopAndResetSounds();
 
+    }
+
+    public void onWriteClicked(View view){
+        Intent designIntent = new Intent(this,DesignActivity.class);
+        startActivityForResult(designIntent,DESIGN_RESULT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == DESIGN_RESULT) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                String[] result= data.getStringArrayExtra(DesignActivity.RESULTBACK);
+                Log.d(TAG, result[0] + " " + result[1] + " " + result[2] + " " + result[3]);
+                mText1.setText(result[0]);
+                mText2.setText(result[1]);
+                mText3.setText(result[2]);
+                mText4.setText(result[3]);
+
+            }
+        }
     }
 
     public void onPlaySoundClicked(View view){

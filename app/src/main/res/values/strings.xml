@@ -13,5 +13,6 @@
     <string name="erase" translatable="false">erase</string>
     <string name="print" translatable="false">print</string>
     <string name="trash" translatable="false">trash</string>
+    <string name="write" translatable="false">write</string>
     <string name="title_activity_translation">TranslationActivity</string>
 </resources>

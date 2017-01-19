@@ -32,7 +32,8 @@
         <activity
             android:name=".TranslationActivity"
             android:label="@string/title_activity_translation"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".DesignActivity"></activity>
     </application>
 
 </manifest>

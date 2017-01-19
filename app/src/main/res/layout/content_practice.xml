@@ -23,12 +23,12 @@
         android:layout_gravity="center"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:weightSum="9"
+        android:weightSum="7.9"
         >
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical" >
@@ -44,45 +44,82 @@
                 android:src="@drawable/print48" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
 
-            <ImageButton
-                android:id="@+id/previous"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/previous"
-                android:onClick="onPreviousClicked"
-                android:scaleType="centerInside"
-                android:src="@drawable/previous" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:weightSum="2"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+
+                    <ImageButton
+                        android:id="@+id/previous"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/previous"
+                        android:onClick="onPreviousClicked"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/previous"
+                        android:layout_marginLeft="@dimen/button_small_margin"
+                        android:layout_marginRight="@dimen/button_small_margin"
+                        android:layout_marginEnd="@dimen/button_small_margin"
+                        android:layout_marginStart="@dimen/button_small_margin" />
+
+                    <ImageButton
+                        android:id="@+id/next"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/next"
+                        android:onClick="onNextClicked"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/next"
+                        android:layout_marginLeft="@dimen/button_small_margin"
+                        android:layout_marginRight="@dimen/button_small_margin"
+                        android:layout_marginEnd="@dimen/button_small_margin"
+                        android:layout_marginStart="@dimen/button_small_margin"/>
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/write"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/write"
+                    android:onClick="onWriteClicked"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/designyourpage"
+                    android:layout_marginLeft="@dimen/button_small_margin"
+                    android:layout_marginRight="@dimen/button_small_margin"
+                    android:layout_marginEnd="@dimen/button_small_margin"
+                    android:layout_marginStart="@dimen/button_small_margin"/>
+
+
+            </RelativeLayout>
+
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <ImageButton
-                android:id="@+id/next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/next"
-                android:onClick="onNextClicked"
-                android:scaleType="centerInside"
-                android:src="@drawable/next" />
-        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical" >
@@ -99,8 +136,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical" >
@@ -118,8 +155,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical" >
@@ -137,8 +174,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical" >
@@ -155,8 +192,8 @@
                 android:src="@drawable/yellow_btn" />
         </LinearLayout>
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical" >
@@ -173,8 +210,8 @@
                 android:src="@drawable/green_btn" />
         </LinearLayout>
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical" >
@@ -214,6 +251,8 @@
             android:layout_height="@dimen/audio_btn_dimen"
             android:layout_width="@dimen/audio_btn_dimen" />
 
+        <include layout="@layout/writing_view"/>
+
         <com.sommayah.writewithmeinarabic2.DrawingView
             android:id="@+id/drawing"
             android:layout_width="match_parent"
@@ -222,6 +261,10 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="@dimen/audio_btn_dimen" />
+
     </RelativeLayout>
+
+
+
 
 </LinearLayout>

@@ -10,6 +10,7 @@
     <dimen name="audio_btn_dimen">48dp</dimen>
     <dimen name="design_btn_dimen">70dp</dimen>
     <dimen name="writing_size">80sp</dimen>
+    <dimen name="grid_view_spacing">10dp</dimen>
 
     <!-- Brush sizes -->
     <dimen name="small_brush">15dp</dimen>

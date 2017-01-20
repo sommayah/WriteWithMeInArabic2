@@ -54,10 +54,11 @@
     <GridView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:gravity="center"
+        android:layout_marginTop="@dimen/grid_view_spacing"
         android:id="@+id/playGridView"
-        android:numColumns="4" />
+        android:numColumns="4"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/grid_view_spacing"
+        android:verticalSpacing="@dimen/grid_view_spacing"
+         />
 </LinearLayout>

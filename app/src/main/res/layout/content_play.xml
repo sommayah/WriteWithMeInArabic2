@@ -24,31 +24,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/easy"
-            android:id="@+id/imageButton6"
+            android:id="@+id/imageButtonEasy"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:layout_marginLeft="@dimen/activity_vertical_margin"
-            android:layout_marginRight="@dimen/activity_vertical_margin" />
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:onClick="levelClicked" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/medium"
-            android:id="@+id/imageButton7"
+            android:id="@+id/imageButtonMedium"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:layout_marginLeft="@dimen/activity_vertical_margin"
-            android:layout_marginRight="@dimen/activity_vertical_margin" />
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:onClick="levelClicked" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/hard"
-            android:id="@+id/imageButton8"
+            android:id="@+id/imageButtonHard"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:layout_marginLeft="@dimen/activity_vertical_margin"
-            android:layout_marginRight="@dimen/activity_vertical_margin" />
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:onClick="levelClicked" />
     </LinearLayout>
 
     <GridView

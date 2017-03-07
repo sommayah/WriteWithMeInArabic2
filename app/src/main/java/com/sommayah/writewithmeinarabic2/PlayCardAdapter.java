@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class PlayCardAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<String> cardValues;
+    private ArrayList<CardView> cardValues;
     @Override
     public int getCount() {
         return cardValues.size();
@@ -34,7 +34,11 @@ public class PlayCardAdapter extends BaseAdapter {
         return 0;
     }
 
-    public PlayCardAdapter(Context context, ArrayList<String> cards) {
+    public void setItem(int pos, int resId){
+        cardValues.get(pos).setImageResource(resId);
+    }
+
+    public PlayCardAdapter(Context context, ArrayList<CardView> cards) {
         this.context = context;
         this.cardValues = cards;
     }

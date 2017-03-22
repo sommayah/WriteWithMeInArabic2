@@ -1,11 +1,13 @@
 package com.sommayah.writewithmeinarabic2;
 
+import android.animation.ObjectAnimator;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -15,6 +17,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.sommayah.writewithmeinarabic2.R.id.card;
 
 public class PlayActivity extends AppCompatActivity {
 
@@ -26,7 +30,7 @@ public class PlayActivity extends AppCompatActivity {
     private int bgColor;
     private int firstTappedCard; //keep positon of first tapped card
     private int secondTappedCard; //keep postion of second tapped card
-    private ImageView firstImage;
+    private CardView firstImage;
     private ImageView secondImage;
     private int height; //height of board
     private int width;  //widht of board
@@ -98,19 +102,6 @@ public class PlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         ButterKnife.bind(this);
-
-        ArrayList<String> cardsDeck =  new ArrayList<>();
-        cardsDeck.add("beecard");
-        cardsDeck.add("lion");
-        cardsDeck.add("lion");
-        cardsDeck.add("beecard");
-        cardsDeck.add("rabbit");
-        cardsDeck.add("rabbit");
-        cardsDeck.add("print48");
-        cardsDeck.add("print48");
-
-//        PlayCardAdapter cardAdapter = new PlayCardAdapter(this, cardsDeck);
-//        playGridView.setAdapter(cardAdapter);
         startNewGame();
 
     }
@@ -142,56 +133,82 @@ public class PlayActivity extends AppCompatActivity {
 
 
         playGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View v, final int position, long id) {
                 // Toast.makeText(GameActivity.this, "" + position, Toast.LENGTH_SHORT).show();
-                if(firstTappedCard == -1){
-                    firstTappedCard = position;
-                    firstImage = (ImageView) v; //save first image to flip back
+                boolean isFaceDown = cardsArray.get(position).isFaceDown();
+                if (isFaceDown) { //only flip if it is facedown if not nothing happens
+                    final CardView view = (CardView) v;
+                    view.setImageName(cardsArray.get(position).getImage_name());
+                    view.flipCard();
+                    int cardPos = cardsArray.get(position).getImage_num();
+                    if (firstTappedCard == -1) {
+                        firstTappedCard = cardPos;
+                        firstImage = (CardView) v;//save first image to flip back
+                    } else { //second card
+                        if (firstTappedCard == cardsArray.get(position).getImage_num()) { //same picture cards
+                            Log.d("correct answer c number", String.valueOf(cardsArray.get(firstTappedCard).getImage_num()));
+                            toEndGameCounter++;
+                            firstTappedCard = -1; //reset first card
+                            if (toEndGameCounter == capacity / 2) {
+                                Log.d("end game with pairs ", String.valueOf(toEndGameCounter));
+                                endGameReached();
+                            }
+                            //SS: delete them from the view here
+                            final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                   // firstImage.flipCard();
+                                  //  view.flipCard();
+                                }
+                            }, 400);
 
 
-                }
-                else if(firstTappedCard != position){ //different one, two different similar cards
-                    if(cardsArray.get(firstTappedCard).getImage_num() == cardsArray.get(position).getImage_num()){
-                        Log.d("correct answer c number",String.valueOf(cardsArray.get(firstTappedCard).getImage_num()));
-                        toEndGameCounter++;
-                        firstTappedCard = -1; //reset first card
-                        if(toEndGameCounter == capacity/2){
-                            Log.d("end game with pairs ",String.valueOf(toEndGameCounter));
-                            endGameReached();
+                        } else {
+                            //two different cards
+                            secondTappedCard = position;
+                            //secondImage = (ImageView) v;
+                            Log.d("different cards clicked", String.valueOf(firstTappedCard) + " " + String.valueOf(secondTappedCard));
+                            firstTappedCard = -1;
+                            final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    firstImage.flipCard();
+                                    view.flipCard();
+                                }
+                            }, 400);
+
                         }
-                        //SS: delete them from the view here
                     }
-                    else{
-                        //two different cards
-                        secondTappedCard = position;
-                        //secondImage = (ImageView) v;
-                        Log.d("different cards clicked",String.valueOf(firstTappedCard)+" "+String.valueOf(secondTappedCard));
-                        flipBackCard(v, cardAdapter);
+//                    ImageView imageView = (ImageView) v;
+//
+//                    int resourceId;
+//                    Resources res = getResources();
+//                    // int counter=  mGenerator.nextInt(IMAGESNAMES.length);
+//                    resourceId = res.getIdentifier(cardsArray.get(position).getImage_name() + "card", "drawable",
+//                            getPackageName());
+//                    //Log.d("image name",cardsArray[position].getImageName() );
+//                    imageView.setImageResource(resourceId);
+//                    cardAdapter.setItem(position, resourceId);
 
-                    }
+
                 }
-                ImageView imageView = (ImageView) v;
-
-                int resourceId;
-                Resources res = getResources();
-                // int counter=  mGenerator.nextInt(IMAGESNAMES.length);
-                resourceId = res.getIdentifier(cardsArray.get(position).getImage_name()+"card", "drawable",
-                        getPackageName());
-                //Log.d("image name",cardsArray[position].getImageName() );
-                imageView.setImageResource(resourceId);
-                cardAdapter.setItem(position, resourceId);
-
-
-
-
-
             }
         });
+
         ////////////////////////////
     }
 
     public void flipBackCard(View v, PlayCardAdapter adp){
         final ImageView imageView = (ImageView) v;
+        float rotation1 = 180f;
+        float rotation = 0.0f;
+
+        ObjectAnimator animation = ObjectAnimator.ofFloat(card, "rotationY", rotation1, rotation);  // HERE 360 IS THE ANGLE OF ROTATE, YOU CAN USE 90, 180 IN PLACE OF IT,  ACCORDING TO YOURS REQUIREMENT
+        animation.setDuration(250); // HERE 500 IS THE DURATION OF THE ANIMATION, YOU CAN INCREASE OR DECREASE ACCORDING TO YOURS REQUIREMENT
+        animation.setInterpolator(new AccelerateDecelerateInterpolator());
+        animation.start();
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -209,9 +226,39 @@ public class PlayActivity extends AppCompatActivity {
                 firstTappedCard = -1;
                 secondTappedCard = -1;
             }
-        }, 200);
+        }, 1000);
 
+    }
 
+    public void flipCard(View v, PlayCardAdapter adp, final boolean facedown){
+        final ImageView imageView = (ImageView) v;
+        float rotation1 = (facedown ? 0.0f : 180f);
+        float rotation = (facedown ? 180f : 0.0f);
+
+        ObjectAnimator animation = ObjectAnimator.ofFloat(card, "rotationY", rotation1, rotation);  // HERE 360 IS THE ANGLE OF ROTATE, YOU CAN USE 90, 180 IN PLACE OF IT,  ACCORDING TO YOURS REQUIREMENT
+        animation.setDuration(250); // HERE 500 IS THE DURATION OF THE ANIMATION, YOU CAN INCREASE OR DECREASE ACCORDING TO YOURS REQUIREMENT
+        animation.setInterpolator(new AccelerateDecelerateInterpolator());
+        animation.start();
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Do something after 100ms
+
+                int resourceId;
+                Resources res = getResources();
+                String imageName= facedown?"beecard":"square";
+                resourceId = res.getIdentifier(imageName, "drawable",
+                        getPackageName());
+                //Log.d("image name",cardsArray[pos].getImageName() );
+                imageView.setImageResource(resourceId);
+                firstImage.setImageResource(resourceId);
+                if(facedown == false){
+                    firstTappedCard = -1;
+                    secondTappedCard = -1;
+                }
+            }
+        }, facedown?1000:2000);
     }
 
     public void endGameReached(){

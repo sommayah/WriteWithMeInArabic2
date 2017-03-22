@@ -1,10 +1,15 @@
 package com.sommayah.writewithmeinarabic2;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
+
+import static com.sommayah.writewithmeinarabic2.R.id.card;
 
 /**
  * Created by sommayahsoliman on 1/19/17.
@@ -33,8 +38,8 @@ public class CardView extends ImageView implements View.OnClickListener{
         image_num = num;
     }
 
-    public void setImage(String name){
-        this.setImage(name);
+    public void setImageName(String name){
+        image_name = name;
     }
 
     public int getImage_num(){return image_num;}
@@ -44,23 +49,37 @@ public class CardView extends ImageView implements View.OnClickListener{
     public boolean isFaceDown(){return facedown;}
 
     public void initialize(int num,String name){
-        image_num = num;
-        image_name = name;
-        facedown = true;
-       // this.setImage(SQUARE);
+        this.image_num = num;
+        this.image_name = name;
+        this.facedown = true;
     }
 
     public void flipCard(){
-        if(facedown == true){
-            Resources bgres = getResources();
-            int bgresourceId;
-            bgresourceId = bgres.getIdentifier("beecard", "drawable"
-                    , getContext().getPackageName());
-            setImageResource(bgresourceId);
-        }else{
-            setImageResource(R.drawable.square);
-        }
-        facedown = !facedown;
+        float rotation1 = (facedown ? 0.0f : 180f);
+        float rotation = (facedown ? 180f : 0.0f);
+
+        ObjectAnimator animation = ObjectAnimator.ofFloat(card, "rotationY", rotation1, rotation);  // HERE 360 IS THE ANGLE OF ROTATE, YOU CAN USE 90, 180 IN PLACE OF IT,  ACCORDING TO YOURS REQUIREMENT
+        animation.setDuration(250); // HERE 500 IS THE DURATION OF THE ANIMATION, YOU CAN INCREASE OR DECREASE ACCORDING TO YOURS REQUIREMENT
+        animation.setInterpolator(new AccelerateDecelerateInterpolator());
+        animation.start();
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Do something after 100ms
+                if(facedown == true){
+                    Resources bgres = getResources();
+                    int bgresourceId;
+                    bgresourceId = bgres.getIdentifier(image_name+"card", "drawable"
+                            , getContext().getPackageName());
+                    setImageResource(bgresourceId);
+                }else{
+                    setImageResource(R.drawable.square);
+                }
+                facedown = !facedown;
+            }
+        }, facedown?200:200);
+
 
     }
 

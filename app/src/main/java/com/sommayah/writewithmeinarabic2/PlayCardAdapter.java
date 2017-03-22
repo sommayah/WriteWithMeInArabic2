@@ -1,12 +1,9 @@
 package com.sommayah.writewithmeinarabic2;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 
@@ -64,30 +61,6 @@ public class PlayCardAdapter extends BaseAdapter {
         final CardView card = (CardView) gridView
                 .findViewById(R.id.card);
         card.setImageResource(R.drawable.square);
-        card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                float rotation1 = (card.isFaceDown()? 0.0f:180f);
-                float rotation = (card.isFaceDown()? 180f:0.0f);
-
-                ObjectAnimator animation = ObjectAnimator.ofFloat(card, "rotationY", rotation1, rotation);  // HERE 360 IS THE ANGLE OF ROTATE, YOU CAN USE 90, 180 IN PLACE OF IT,  ACCORDING TO YOURS REQUIREMENT
-                animation.setDuration(250); // HERE 500 IS THE DURATION OF THE ANIMATION, YOU CAN INCREASE OR DECREASE ACCORDING TO YOURS REQUIREMENT
-                animation.setInterpolator(new AccelerateDecelerateInterpolator());
-                animation.start();
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        card.flipCard();
-                    }
-                }, 150);
-//                ValueAnimator mFlipAnimator = ValueAnimator.ofFloat(0f,180f);
-//                mFlipAnimator.addUpdateListener(new FlipListener(card, card));
-//                mFlipAnimator.start();
-
-            }
-        });
-
         return gridView;
     }
 

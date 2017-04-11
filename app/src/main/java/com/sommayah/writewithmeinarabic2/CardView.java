@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 
-import static com.sommayah.writewithmeinarabic2.R.id.card;
-
 /**
  * Created by sommayahsoliman on 1/19/17.
  */
@@ -57,9 +55,8 @@ public class CardView extends ImageView implements View.OnClickListener{
     public void flipCard(){
         float rotation1 = (facedown ? 0.0f : 180f);
         float rotation = (facedown ? 180f : 0.0f);
-
-        ObjectAnimator animation = ObjectAnimator.ofFloat(card, "rotationY", rotation1, rotation);  // HERE 360 IS THE ANGLE OF ROTATE, YOU CAN USE 90, 180 IN PLACE OF IT,  ACCORDING TO YOURS REQUIREMENT
-        animation.setDuration(250); // HERE 500 IS THE DURATION OF THE ANIMATION, YOU CAN INCREASE OR DECREASE ACCORDING TO YOURS REQUIREMENT
+        ObjectAnimator animation = ObjectAnimator.ofFloat(this, "rotationY", rotation1, rotation);  // HERE 360 IS THE ANGLE OF ROTATE, YOU CAN USE 90, 180 IN PLACE OF IT,  ACCORDING TO YOURS REQUIREMENT
+        animation.setDuration(200); // HERE 500 IS THE DURATION OF THE ANIMATION, YOU CAN INCREASE OR DECREASE ACCORDING TO YOURS REQUIREMENT
         animation.setInterpolator(new AccelerateDecelerateInterpolator());
         animation.start();
         final Handler handler = new Handler();
@@ -78,7 +75,7 @@ public class CardView extends ImageView implements View.OnClickListener{
                 }
                 facedown = !facedown;
             }
-        }, facedown?200:200);
+        }, facedown?100:100);
 
 
     }

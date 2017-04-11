@@ -8,12 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -120,6 +122,7 @@ public class PlayActivity extends AppCompatActivity {
                 //   Log.v("card number", String.valueOf(k));
             }
         }
+        Collections.shuffle(cardsArray);
         //ss: add them later shuffleCardsArray();
         toEndGameCounter = 0;
 
@@ -149,6 +152,7 @@ public class PlayActivity extends AppCompatActivity {
                             Log.d("correct answer c number", String.valueOf(cardsArray.get(firstTappedCard).getImage_num()));
                             toEndGameCounter++;
                             firstTappedCard = -1; //reset first card
+                            secondTappedCard = -1;
                             if (toEndGameCounter == capacity / 2) {
                                 Log.d("end game with pairs ", String.valueOf(toEndGameCounter));
                                 endGameReached();
@@ -158,8 +162,14 @@ public class PlayActivity extends AppCompatActivity {
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                   // firstImage.flipCard();
-                                  //  view.flipCard();
+                                    AlphaAnimation animation1 = new AlphaAnimation(1f, 0f);
+                                    animation1.setDuration(500);
+                                    firstImage.setAlpha(1f);
+                                    firstImage.startAnimation(animation1);
+                                    firstImage.setVisibility(View.INVISIBLE);
+                                    view.setAlpha(1f);
+                                    view.startAnimation(animation1);
+                                    view.setVisibility(View.INVISIBLE);
                                 }
                             }, 400);
 
